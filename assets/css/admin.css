@@ -1,0 +1,370 @@
+.memories-admin-shield-wrap {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 10px 20px 20px 2px;
+    color: #2c3338;
+    background: #ffffff;
+    border: 1px solid #ccd0d4;
+    width: auto;
+}
+.memories-admin-shield-wrap a {
+    color: #2271b1;
+    text-decoration: none;
+    transition: color 0.1s ease;
+}
+.memories-admin-shield-wrap a:hover {
+    color: #135e96;
+}
+.mas-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 16px 20px;
+    border-bottom: 1px solid #ccd0d4;
+}
+.mas-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.mas-logo-icon {
+    font-size: 28px;
+}
+.mas-header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2c3338;
+    line-height: 1.2;
+}
+.mas-subtitle {
+    margin: 2px 0 0 0;
+    font-size: 12px;
+    color: #64748b;
+}
+.mas-container {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    background: #ffffff;
+    min-height: 600px;
+}
+.mas-sidebar {
+    background: #f0f0f1;
+    padding: 20px;
+    border-right: 1px solid #ccd0d4;
+}
+.mas-sidebar h3 {
+    margin: 0 0 12px 0;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+}
+.mas-role-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.mas-role-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    cursor: pointer;
+    background: transparent;
+    transition: all 0.1s ease;
+    border: 1px solid transparent;
+    color: #2c3338;
+    border-radius: 0 !important;
+}
+.mas-role-item:hover {
+    background: #e0e0e0;
+    color: #000000;
+}
+.mas-role-item.active {
+    background: #2271b1;
+    color: #ffffff;
+    font-weight: 600;
+}
+.mas-role-badge {
+    background: #dcdcde;
+    color: #2c3338;
+    padding: 2px 6px;
+    font-size: 11px;
+    border-radius: 0 !important;
+}
+.mas-role-item.active .mas-role-badge {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+.mas-content {
+    padding: 20px;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+}
+.mas-card {
+    background: #ffffff;
+    border: 1px solid #ccd0d4;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-radius: 0 !important;
+}
+.mas-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid #ccd0d4;
+}
+.mas-card-header h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #2c3338;
+}
+.mas-search-wrapper input {
+    background: #ffffff;
+    border: 1px solid #8c8f94;
+    color: #2c3338;
+    padding: 6px 12px;
+    font-size: 13px;
+    width: 240px;
+    border-radius: 0 !important;
+}
+.mas-search-wrapper input:focus {
+    border-color: #2271b1;
+    outline: none;
+    box-shadow: 0 0 0 1px #2271b1;
+}
+.mas-tabs-nav {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid #ccd0d4;
+    padding: 0 20px;
+    background: #f6f7f7;
+}
+.mas-tab-nav-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #64748b;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 0 !important;
+}
+.mas-tab-nav-btn:hover {
+    color: #2c3338;
+}
+.mas-tab-nav-btn.active {
+    color: #2271b1;
+    border-bottom-color: #2271b1;
+    font-weight: 600;
+}
+.mas-tab-content {
+    display: none;
+    padding: 20px;
+    max-height: 480px;
+    overflow-y: auto;
+    background: #ffffff;
+}
+.mas-tab-content.active {
+    display: block;
+}
+.mas-selection-actions {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.mas-btn-link {
+    background: none;
+    border: none;
+    color: #2271b1;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 0;
+    border-radius: 0 !important;
+}
+.mas-btn-link:hover {
+    text-decoration: underline;
+}
+.mas-menu-tree, .mas-nodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.mas-parent-item {
+    background: #f6f7f7;
+    border: 1px solid #ccd0d4;
+    padding: 12px 16px;
+    border-radius: 0 !important;
+}
+.mas-parent-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.mas-submenu-list {
+    margin-left: 24px;
+    margin-top: 8px;
+    border-left: 1px solid #ccd0d4;
+    padding-left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.mas-menu-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.mas-menu-label {
+    font-size: 13px;
+    color: #2c3338;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.mas-parent-header .mas-menu-label {
+    font-weight: 600;
+}
+.mas-radio-group {
+    display: flex;
+    gap: 16px;
+}
+.mas-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    user-select: none;
+    color: #2c3338;
+}
+.mas-radio-label input[type="radio"] {
+    margin: 0;
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+}
+.mas-radio-label.disabled {
+    color: #a7aaad;
+    cursor: not-allowed;
+}
+.mas-badge-disabled-msg {
+    font-size: 10px;
+    color: #64748b;
+    background: #f0f0f1;
+    border: 1px solid #ccd0d4;
+    padding: 1px 4px;
+    margin-left: 8px;
+    border-radius: 0 !important;
+}
+.mas-node-item {
+    background: #f6f7f7;
+    border: 1px solid #ccd0d4;
+    padding: 10px 16px;
+    border-radius: 0 !important;
+}
+.mas-card-footer {
+    padding: 16px 20px;
+    border-top: 1px solid #ccd0d4;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #f6f7f7;
+    border-radius: 0 !important;
+}
+.mas-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1px solid #ccd0d4;
+    border-radius: 0 !important;
+    transition: all 0.1s ease;
+}
+.mas-btn-primary {
+    background: #2271b1;
+    color: #ffffff;
+    border-color: #2271b1;
+}
+.mas-btn-primary:hover {
+    background: #135e96;
+    border-color: #135e96;
+}
+.mas-btn-secondary {
+    background: #ffffff;
+    color: #2c3338;
+}
+.mas-btn-secondary:hover {
+    background: #f0f0f1;
+}
+.mas-badge {
+    padding: 2px 8px;
+    font-size: 11px;
+    font-weight: 600;
+    border: 1px solid transparent;
+    border-radius: 0 !important;
+}
+.mas-badge-active {
+    background: #e5f5fa;
+    color: #007cba;
+    border-color: #007cba;
+}
+.mas-badge-inactive {
+    background: #fcf0f1;
+    color: #d63638;
+    border-color: #d63638;
+}
+.mas-toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #2271b1;
+    color: #ffffff;
+    padding: 10px 20px;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    z-index: 99999;
+    border-radius: 0 !important;
+}
+.mas-toast.show {
+    opacity: 1;
+}
+.mas-toast.error {
+    background: #d63638;
+}
+.mas-checkbox-label-meta {
+    font-size: 11px;
+    color: #8c8f94;
+    margin-left: 4px;
+}
+.mas-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.mas-bypass-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffffff;
+    padding: 6px 12px;
+    border: 1px solid #ccd0d4;
+    border-radius: 0 !important;
+}
+.mas-badge-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #64748b;
+}
