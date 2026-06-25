@@ -269,11 +269,6 @@ class Memories_Admin_Shield_Admin {
                 </main>
             </div>
             
-            <div style="background:#ffffff; color:#2c3338; padding:15px; border:1px solid #ccd0d4; margin-top:20px;">
-                <h3 style="margin-top:0;">Debug: Stored settings in DB</h3>
-                <pre style="white-space:pre-wrap; margin:0; font-family:monospace; font-size:12px;"><?php echo esc_html(print_r(get_option('memories_admin_shield_settings'), true)); ?></pre>
-            </div>
-
             <div id="mas-toast" class="mas-toast">Saved successfully!</div>
         </div>
         <?php

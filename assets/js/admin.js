@@ -189,9 +189,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             const isHidden = getSetting('menus', slug);
 
-            // Show option
+            // Show option toggle button
             const showLabel = document.createElement('label');
-            showLabel.className = 'mas-radio-label';
+            showLabel.className = 'mas-radio-toggle';
             const showRadio = document.createElement('input');
             showRadio.type = 'radio';
             showRadio.name = `menu_${slug}`;
@@ -202,11 +202,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 showRadio.checked = true;
             }
             showLabel.appendChild(showRadio);
-            showLabel.appendChild(document.createTextNode('Show'));
+            const showSpan = document.createElement('span');
+            showSpan.textContent = 'Show';
+            showLabel.appendChild(showSpan);
 
-            // Hide option
+            // Hide option toggle button
             const hideLabel = document.createElement('label');
-            hideLabel.className = 'mas-radio-label';
+            hideLabel.className = 'mas-radio-toggle';
             const hideRadio = document.createElement('input');
             hideRadio.type = 'radio';
             hideRadio.name = `menu_${slug}`;
@@ -218,7 +220,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 hideLabel.className += ' disabled';
             }
             hideLabel.appendChild(hideRadio);
-            hideLabel.appendChild(document.createTextNode('Hide'));
+            const hideSpan = document.createElement('span');
+            hideSpan.textContent = 'Hide';
+            hideLabel.appendChild(hideSpan);
 
             // Action Listeners
             showRadio.addEventListener('change', () => {
@@ -290,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     // Show Option
                     const subShowLabel = document.createElement('label');
-                    subShowLabel.className = 'mas-radio-label';
+                    subShowLabel.className = 'mas-radio-toggle';
                     const subShowRadio = document.createElement('input');
                     subShowRadio.type = 'radio';
                     subShowRadio.name = `submenu_${slug}_${subSlug}`;
@@ -301,11 +305,13 @@ document.addEventListener('DOMContentLoaded', function() {
                         subShowRadio.checked = true;
                     }
                     subShowLabel.appendChild(subShowRadio);
-                    subShowLabel.appendChild(document.createTextNode('Show'));
+                    const subShowSpan = document.createElement('span');
+                    subShowSpan.textContent = 'Show';
+                    subShowLabel.appendChild(subShowSpan);
 
                     // Hide Option
                     const subHideLabel = document.createElement('label');
-                    subHideLabel.className = 'mas-radio-label';
+                    subHideLabel.className = 'mas-radio-toggle';
                     const subHideRadio = document.createElement('input');
                     subHideRadio.type = 'radio';
                     subHideRadio.name = `submenu_${slug}_${subSlug}`;
@@ -317,7 +323,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         subHideLabel.className += ' disabled';
                     }
                     subHideLabel.appendChild(subHideRadio);
-                    subHideLabel.appendChild(document.createTextNode('Hide'));
+                    const subHideSpan = document.createElement('span');
+                    subHideSpan.textContent = 'Hide';
+                    subHideLabel.appendChild(subHideSpan);
 
                     subShowRadio.addEventListener('change', () => {
                         updateSetting('submenus', subSlug, false, slug);
@@ -389,25 +397,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Show Option
             const showLabel = document.createElement('label');
-            showLabel.className = 'mas-radio-label';
+            showLabel.className = 'mas-radio-toggle';
             const showRadio = document.createElement('input');
             showRadio.type = 'radio';
             showRadio.name = `adminbar_${id}`;
             showRadio.value = 'show';
             showRadio.checked = !isNodeHidden;
             showLabel.appendChild(showRadio);
-            showLabel.appendChild(document.createTextNode('Show'));
+            const showSpan = document.createElement('span');
+            showSpan.textContent = 'Show';
+            showLabel.appendChild(showSpan);
 
             // Hide Option
             const hideLabel = document.createElement('label');
-            hideLabel.className = 'mas-radio-label';
+            hideLabel.className = 'mas-radio-toggle';
             const hideRadio = document.createElement('input');
             hideRadio.type = 'radio';
             hideRadio.name = `adminbar_${id}`;
             hideRadio.value = 'hide';
             hideRadio.checked = isNodeHidden;
             hideLabel.appendChild(hideRadio);
-            hideLabel.appendChild(document.createTextNode('Hide'));
+            const hideSpan = document.createElement('span');
+            hideSpan.textContent = 'Hide';
+            hideLabel.appendChild(hideSpan);
 
             showRadio.addEventListener('change', () => {
                 updateSetting('admin_bar', id, false);
