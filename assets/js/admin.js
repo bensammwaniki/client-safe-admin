@@ -13,9 +13,29 @@ document.addEventListener('DOMContentLoaded', function() {
     // Normalize settings to object (prevents empty array JSON stringify bug)
     if (Array.isArray(data.settings) || !data.settings) {
         data.settings = { roles: {} };
-    } else if (!data.settings.roles) {
+    } else if (!data.settings.roles || Array.isArray(data.settings.roles)) {
         data.settings.roles = {};
     }
+
+    // Deep normalization of sub-properties to objects
+    Object.keys(data.settings.roles).forEach(role => {
+        const rSettings = data.settings.roles[role];
+        if (!rSettings || Array.isArray(rSettings)) {
+            data.settings.roles[role] = { menus: {}, submenus: {}, admin_bar: {} };
+        } else {
+            if (!rSettings.menus || Array.isArray(rSettings.menus)) rSettings.menus = {};
+            if (!rSettings.admin_bar || Array.isArray(rSettings.admin_bar)) rSettings.admin_bar = {};
+            if (!rSettings.submenus || Array.isArray(rSettings.submenus)) {
+                rSettings.submenus = {};
+            } else {
+                Object.keys(rSettings.submenus).forEach(parentSlug => {
+                    if (!rSettings.submenus[parentSlug] || Array.isArray(rSettings.submenus[parentSlug])) {
+                        rSettings.submenus[parentSlug] = {};
+                    }
+                });
+            }
+        }
+    });
 
     // Render roles sidebar list
     function renderRoleList() {

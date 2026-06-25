@@ -52,7 +52,32 @@ class Memories_Admin_Shield_Admin {
         $user_counts = count_users();
         $role_counts = isset($user_counts['avail_roles']) ? $user_counts['avail_roles'] : array();
         $discovered = get_option('memories_admin_shield_discovered', array('menus' => array(), 'admin_bar' => array()));
-        $settings = get_option('memories_admin_shield_settings', array('roles' => array()));
+        $settings = get_option('memories_admin_shield_settings', array());
+        if (!is_array($settings)) {
+            $settings = array();
+        }
+        if (!isset($settings['roles']) || empty($settings['roles'])) {
+            $settings['roles'] = (object) array();
+        } else {
+            foreach ($settings['roles'] as $role => $role_settings) {
+                if (!isset($role_settings['menus']) || empty($role_settings['menus'])) {
+                    $settings['roles'][$role]['menus'] = (object) array();
+                }
+                if (!isset($role_settings['submenus']) || empty($role_settings['submenus'])) {
+                    $settings['roles'][$role]['submenus'] = (object) array();
+                } else {
+                    foreach ($role_settings['submenus'] as $parent => $subs) {
+                        if (empty($subs)) {
+                            $settings['roles'][$role]['submenus'][$parent] = (object) array();
+                        }
+                    }
+                }
+                if (!isset($role_settings['admin_bar']) || empty($role_settings['admin_bar'])) {
+                    $settings['roles'][$role]['admin_bar'] = (object) array();
+                }
+            }
+        }
+
         $user_id = get_current_user_id();
         $bypass = get_user_meta($user_id, 'memories_admin_shield_bypass', true) ? 1 : 0;
 
@@ -77,8 +102,8 @@ class Memories_Admin_Shield_Admin {
             wp_send_json_error(array('message' => __('Unauthorized access.', 'memories-admin-shield')));
         }
 
-        $raw_settings = isset($_POST['settings']) ? $_POST['settings'] : '';
-        $settings = json_decode(stripslashes($raw_settings), true);
+        $raw_settings = isset($_POST['settings']) ? wp_unslash($_POST['settings']) : '';
+        $settings = json_decode($raw_settings, true);
 
         if (!is_array($settings)) {
             wp_send_json_error(array('message' => __('Invalid settings format.', 'memories-admin-shield')));
@@ -88,16 +113,31 @@ class Memories_Admin_Shield_Admin {
         if (isset($settings['roles']) && is_array($settings['roles'])) {
             foreach ($settings['roles'] as $role => $role_settings) {
                 $sanitized['roles'][$role] = array(
-                    'menus' => isset($role_settings['menus']) && is_array($role_settings['menus']) ? array_map('boolval', $role_settings['menus']) : array(),
+                    'menus' => array(),
                     'submenus' => array(),
-                    'admin_bar' => isset($role_settings['admin_bar']) && is_array($role_settings['admin_bar']) ? array_map('boolval', $role_settings['admin_bar']) : array(),
+                    'admin_bar' => array()
                 );
+
+                if (isset($role_settings['menus']) && is_array($role_settings['menus'])) {
+                    foreach ($role_settings['menus'] as $slug => $val) {
+                        $sanitized['roles'][$role]['menus'][$slug] = (bool) $val;
+                    }
+                }
 
                 if (isset($role_settings['submenus']) && is_array($role_settings['submenus'])) {
                     foreach ($role_settings['submenus'] as $parent_slug => $sub_slugs) {
                         if (is_array($sub_slugs)) {
-                            $sanitized['roles'][$role]['submenus'][$parent_slug] = array_map('boolval', $sub_slugs);
+                            $sanitized['roles'][$role]['submenus'][$parent_slug] = array();
+                            foreach ($sub_slugs as $sub_slug => $val) {
+                                $sanitized['roles'][$role]['submenus'][$parent_slug][$sub_slug] = (bool) $val;
+                            }
                         }
+                    }
+                }
+
+                if (isset($role_settings['admin_bar']) && is_array($role_settings['admin_bar'])) {
+                    foreach ($role_settings['admin_bar'] as $node_id => $val) {
+                        $sanitized['roles'][$role]['admin_bar'][$node_id] = (bool) $val;
                     }
                 }
             }
@@ -229,6 +269,11 @@ class Memories_Admin_Shield_Admin {
                 </main>
             </div>
             
+            <div style="background:#ffffff; color:#2c3338; padding:15px; border:1px solid #ccd0d4; margin-top:20px;">
+                <h3 style="margin-top:0;">Debug: Stored settings in DB</h3>
+                <pre style="white-space:pre-wrap; margin:0; font-family:monospace; font-size:12px;"><?php echo esc_html(print_r(get_option('memories_admin_shield_settings'), true)); ?></pre>
+            </div>
+
             <div id="mas-toast" class="mas-toast">Saved successfully!</div>
         </div>
         <?php
