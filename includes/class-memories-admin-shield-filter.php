@@ -86,6 +86,11 @@ class Memories_Admin_Shield_Filter {
                     continue;
                 }
 
+                // Prevent removing primary landing submenu page if parent menu is visible
+                if ($sub_slug === $parent_slug) {
+                    continue;
+                }
+
                 if ($count === $total_user_roles) {
                     remove_submenu_page($parent_slug, $sub_slug);
                 }

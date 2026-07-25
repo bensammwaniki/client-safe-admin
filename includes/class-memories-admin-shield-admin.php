@@ -59,7 +59,25 @@ class Memories_Admin_Shield_Admin {
 
         $user_counts = count_users();
         $role_counts = isset($user_counts['avail_roles']) ? $user_counts['avail_roles'] : array();
+
+        // Run menu discovery scan to guarantee fresh menu items are captured
+        $shield = Memories_Admin_Shield::get_instance();
+        if ($shield && isset($shield->scanner)) {
+            $shield->scanner->discover_menus();
+        }
+
         $discovered = get_option('memories_admin_shield_discovered', array('menus' => array(), 'admin_bar' => array()));
+        if (!is_array($discovered)) {
+            $discovered = array('menus' => (object) array(), 'admin_bar' => (object) array());
+        } else {
+            if (!isset($discovered['menus']) || empty($discovered['menus'])) {
+                $discovered['menus'] = (object) array();
+            }
+            if (!isset($discovered['admin_bar']) || empty($discovered['admin_bar'])) {
+                $discovered['admin_bar'] = (object) array();
+            }
+        }
+
         $settings = get_option('memories_admin_shield_settings', array());
         if (!is_array($settings)) {
             $settings = array();

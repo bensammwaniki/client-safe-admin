@@ -19,16 +19,39 @@ class Memories_Admin_Shield_Scanner {
         }
 
         global $menu, $submenu;
-        if (empty($menu)) {
+        if (empty($menu) && !empty($GLOBALS['menu'])) {
+            $menu = $GLOBALS['menu'];
+        }
+        if (empty($submenu) && !empty($GLOBALS['submenu'])) {
+            $submenu = $GLOBALS['submenu'];
+        }
+
+        if (empty($menu) || !is_array($menu)) {
             return;
         }
 
         $discovered = get_option('memories_admin_shield_discovered', array('menus' => array(), 'admin_bar' => array()));
+        if (!is_array($discovered)) {
+            $discovered = array('menus' => array(), 'admin_bar' => array());
+        }
+        if (!isset($discovered['menus']) || !is_array($discovered['menus'])) {
+            $discovered['menus'] = array();
+        }
+        if (!isset($discovered['admin_bar']) || !is_array($discovered['admin_bar'])) {
+            $discovered['admin_bar'] = array();
+        }
+
         $changed = false;
 
         // Process sidebar menus
         foreach ($menu as $item) {
             if (empty($item[2])) continue;
+
+            // Skip menu separators
+            if (!empty($item[4]) && strpos($item[4], 'wp-menu-separator') !== false) {
+                continue;
+            }
+
             $slug = $item[2];
             $cap  = isset($item[1]) ? $item[1] : '';
             $raw_title = isset($item[0]) ? $item[0] : '';
@@ -59,8 +82,8 @@ class Memories_Admin_Shield_Scanner {
             }
 
             // Process submenus
-            if (!empty($submenu[$slug])) {
-                if (!isset($discovered['menus'][$slug]['submenus'])) {
+            if (!empty($submenu[$slug]) && is_array($submenu[$slug])) {
+                if (!isset($discovered['menus'][$slug]['submenus']) || !is_array($discovered['menus'][$slug]['submenus'])) {
                     $discovered['menus'][$slug]['submenus'] = array();
                 }
 
@@ -85,7 +108,6 @@ class Memories_Admin_Shield_Scanner {
                         : null;
 
                     if (is_string($existing_sub)) {
-                        // Upgrade legacy string format to array format
                         $discovered['menus'][$slug]['submenus'][$sub_slug] = $new_sub_data;
                         $changed = true;
                     } else if (is_array($existing_sub)) {
@@ -120,6 +142,10 @@ class Memories_Admin_Shield_Scanner {
         }
 
         $discovered = get_option('memories_admin_shield_discovered', array('menus' => array(), 'admin_bar' => array()));
+        if (!is_array($discovered)) {
+            $discovered = array('menus' => array(), 'admin_bar' => array());
+        }
+
         $changed = false;
 
         foreach ($nodes as $node) {

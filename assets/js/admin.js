@@ -11,6 +11,17 @@ document.addEventListener('DOMContentLoaded', function() {
         activeRole: 'administrator'
     };
 
+    // Normalize discovered data structure to objects
+    if (!data.discovered || Array.isArray(data.discovered)) {
+        data.discovered = { menus: {}, admin_bar: {} };
+    }
+    if (!data.discovered.menus || Array.isArray(data.discovered.menus)) {
+        data.discovered.menus = {};
+    }
+    if (!data.discovered.admin_bar || Array.isArray(data.discovered.admin_bar)) {
+        data.discovered.admin_bar = {};
+    }
+
     // Normalize settings to object (prevents empty array JSON stringify bug)
     if (Array.isArray(data.settings) || !data.settings) {
         data.settings = { roles: {} };
@@ -247,6 +258,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             showRadio.addEventListener('change', () => {
                 updateSetting('menus', slug, false);
+                if (submenuKeys.length > 0) {
+                    submenuKeys.forEach(subSlug => {
+                        updateSetting('submenus', subSlug, false, slug);
+                        const subShowRadio = parentDiv.querySelector(`input[name="submenu_${slug}_${subSlug}"][value="show"]`);
+                        if (subShowRadio && !subShowRadio.disabled) {
+                            subShowRadio.checked = true;
+                        }
+                    });
+                }
                 const subList = parentDiv.querySelector('.mas-submenu-list');
                 if (subList) {
                     subList.style.display = 'flex';
@@ -255,6 +275,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
             hideRadio.addEventListener('change', () => {
                 updateSetting('menus', slug, true);
+                if (submenuKeys.length > 0) {
+                    submenuKeys.forEach(subSlug => {
+                        updateSetting('submenus', subSlug, true, slug);
+                        const subHideRadio = parentDiv.querySelector(`input[name="submenu_${slug}_${subSlug}"][value="hide"]`);
+                        if (subHideRadio && !subHideRadio.disabled) {
+                            subHideRadio.checked = true;
+                        }
+                    });
+                }
                 const subList = parentDiv.querySelector('.mas-submenu-list');
                 if (subList) {
                     subList.style.display = 'none';

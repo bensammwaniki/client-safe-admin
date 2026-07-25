@@ -1,16 +1,18 @@
 /* ==========================================================================
-   Memories Admin Shield - Premium Modern CSS (Zero Hard Borders)
+   Memories Admin Shield - Premium Modern CSS (Full Height, No Inner Scroll)
    ========================================================================== */
 
 .memories-admin-shield-wrap {
     font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    margin: 20px 20px 20px 0;
+    margin: 16px 20px 20px 0;
     color: #1e293b;
     background: #ffffff;
     border: 1px solid rgba(226, 232, 240, 0.8);
     border-radius: 16px;
     box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.05), 0 2px 10px -2px rgba(15, 23, 42, 0.03);
-    overflow: hidden;
+    min-height: calc(100vh - 120px);
+    display: flex;
+    flex-direction: column;
 }
 
 .memories-admin-shield-wrap a {
@@ -31,6 +33,7 @@
     background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     padding: 20px 28px;
     border-bottom: 1px solid #f1f5f9;
+    border-radius: 16px 16px 0 0;
 }
 
 .mas-logo-area {
@@ -98,7 +101,9 @@
     display: grid;
     grid-template-columns: 260px 1fr;
     background: #ffffff;
-    min-height: 620px;
+    flex: 1;
+    min-height: 550px;
+    border-radius: 0 0 16px 16px;
 }
 
 /* Sidebar Navigation */
@@ -106,6 +111,7 @@
     background: #f8fafc;
     padding: 24px 18px;
     border-right: 1px solid #f1f5f9;
+    border-radius: 0 0 0 16px;
 }
 
 .mas-sidebar h3 {
@@ -172,6 +178,7 @@
     background: #ffffff;
     display: flex;
     flex-direction: column;
+    flex: 1;
 }
 
 .mas-card {
@@ -180,9 +187,8 @@
     box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
     display: flex;
     flex-direction: column;
-    height: 100%;
+    flex: 1;
     border-radius: 14px;
-    overflow: hidden;
 }
 
 .mas-card-header {
@@ -192,6 +198,7 @@
     padding: 20px 24px;
     border-bottom: 1px solid #f1f5f9;
     background: #ffffff;
+    border-radius: 14px 14px 0 0;
 }
 
 .mas-card-header h2 {
@@ -251,11 +258,11 @@
     font-weight: 600;
 }
 
+/* Tab Content - Uncapped Height & Natural Page Scrolling */
 .mas-tab-content {
     display: none;
     padding: 24px;
-    max-height: 500px;
-    overflow-y: auto;
+    flex: 1;
     background: #ffffff;
 }
 
