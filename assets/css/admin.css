@@ -1,259 +1,369 @@
+/* ==========================================================================
+   Memories Admin Shield - Premium Modern CSS (Zero Hard Borders)
+   ========================================================================== */
+
 .memories-admin-shield-wrap {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    margin: 10px 20px 20px 2px;
-    color: #2c3338;
+    font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin: 20px 20px 20px 0;
+    color: #1e293b;
     background: #ffffff;
-    border: 1px solid #ccd0d4;
-    width: auto;
-    border-radius: 8px;
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    border-radius: 16px;
+    box-shadow: 0 4px 25px -4px rgba(15, 23, 42, 0.05), 0 2px 10px -2px rgba(15, 23, 42, 0.03);
     overflow: hidden;
 }
+
 .memories-admin-shield-wrap a {
-    color: #2271b1;
+    color: #4f46e5;
     text-decoration: none;
-    transition: color 0.1s ease;
+    transition: color 0.15s ease;
 }
+
 .memories-admin-shield-wrap a:hover {
-    color: #135e96;
+    color: #3730a3;
 }
+
+/* Header Section */
 .mas-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #ffffff;
-    padding: 16px 20px;
-    border-bottom: 1px solid #ccd0d4;
-    border-radius: 8px 8px 0 0;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    padding: 20px 28px;
+    border-bottom: 1px solid #f1f5f9;
 }
+
 .mas-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.mas-logo-icon {
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #6366f1 0%, #3b82f6 100%);
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);
+    color: #ffffff;
+}
+
+.mas-header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.mas-subtitle {
+    margin: 3px 0 0 0;
+    font-size: 13px;
+    color: #64748b;
+    font-weight: 400;
+}
+
+.mas-header-actions {
     display: flex;
     align-items: center;
     gap: 12px;
 }
-.mas-logo-icon {
-    font-size: 28px;
+
+.mas-bypass-status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #ffffff;
+    padding: 6px 14px;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 }
-.mas-header h1 {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #2c3338;
-    line-height: 1.2;
-}
-.mas-subtitle {
-    margin: 2px 0 0 0;
+
+.mas-badge-label {
     font-size: 12px;
+    font-weight: 600;
     color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
+
+/* Layout Container */
 .mas-container {
     display: grid;
-    grid-template-columns: 240px 1fr;
+    grid-template-columns: 260px 1fr;
     background: #ffffff;
-    min-height: 600px;
-    border-radius: 0 0 8px 8px;
+    min-height: 620px;
 }
+
+/* Sidebar Navigation */
 .mas-sidebar {
-    background: #f0f0f1;
-    padding: 20px;
-    border-right: 1px solid #ccd0d4;
+    background: #f8fafc;
+    padding: 24px 18px;
+    border-right: 1px solid #f1f5f9;
 }
+
 .mas-sidebar h3 {
-    margin: 0 0 12px 0;
+    margin: 0 0 14px 10px;
     font-size: 11px;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: #64748b;
+    letter-spacing: 0.08em;
+    color: #94a3b8;
 }
+
 .mas-role-list {
     list-style: none;
     padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
 }
+
 .mas-role-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 12px;
+    padding: 11px 16px;
     cursor: pointer;
     background: transparent;
-    transition: all 0.1s ease;
-    border: 1px solid transparent;
-    color: #2c3338;
-    border-radius: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    color: #334155;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 10px;
 }
+
 .mas-role-item:hover {
-    background: #e0e0e0;
-    color: #000000;
+    background: #e2e8f0;
+    color: #0f172a;
 }
+
 .mas-role-item.active {
-    background: #2271b1;
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
     color: #ffffff;
     font-weight: 600;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
 }
+
 .mas-role-badge {
-    background: #dcdcde;
-    color: #2c3338;
-    padding: 2px 6px;
+    background: #e2e8f0;
+    color: #475569;
+    padding: 2px 8px;
     font-size: 11px;
-    border-radius: 8px;
+    font-weight: 700;
+    border-radius: 20px;
 }
+
 .mas-role-item.active .mas-role-badge {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.22);
     color: #ffffff;
 }
+
+/* Content Area */
 .mas-content {
-    padding: 20px;
+    padding: 24px 28px;
     background: #ffffff;
     display: flex;
     flex-direction: column;
 }
+
 .mas-card {
     background: #ffffff;
-    border: 1px solid #ccd0d4;
+    border: 1px solid #f1f5f9;
+    box-shadow: 0 2px 12px rgba(15, 23, 42, 0.03);
     display: flex;
     flex-direction: column;
     height: 100%;
-    border-radius: 8px;
+    border-radius: 14px;
     overflow: hidden;
 }
+
 .mas-card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 20px;
-    border-bottom: 1px solid #ccd0d4;
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+    background: #ffffff;
 }
+
 .mas-card-header h2 {
     margin: 0;
-    font-size: 16px;
-    color: #2c3338;
+    font-size: 17px;
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.01em;
 }
+
 .mas-search-wrapper input {
-    background: #ffffff;
-    border: 1px solid #8c8f94;
-    color: #2c3338;
-    padding: 6px 12px;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #1e293b;
+    padding: 8px 14px;
     font-size: 13px;
-    width: 240px;
-    border-radius: 8px;
+    width: 260px;
+    border-radius: 10px;
+    transition: all 0.2s ease;
 }
+
 .mas-search-wrapper input:focus {
-    border-color: #2271b1;
+    background: #ffffff;
+    border-color: #6366f1;
     outline: none;
-    box-shadow: 0 0 0 1px #2271b1;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
+
+/* Tabs Navigation */
 .mas-tabs-nav {
     display: flex;
-    gap: 4px;
-    border-bottom: 1px solid #ccd0d4;
-    padding: 0 20px;
-    background: #f6f7f7;
+    gap: 8px;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 0 24px;
+    background: #f8fafc;
 }
+
 .mas-tab-nav-btn {
     background: transparent;
     border: none;
     border-bottom: 2px solid transparent;
     color: #64748b;
-    padding: 12px 16px;
+    padding: 14px 18px;
     cursor: pointer;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
+    transition: all 0.15s ease;
 }
+
 .mas-tab-nav-btn:hover {
-    color: #2c3338;
+    color: #1e293b;
 }
+
 .mas-tab-nav-btn.active {
-    color: #2271b1;
-    border-bottom-color: #2271b1;
+    color: #4f46e5;
+    border-bottom-color: #4f46e5;
     font-weight: 600;
 }
+
 .mas-tab-content {
     display: none;
-    padding: 20px;
-    max-height: 480px;
+    padding: 24px;
+    max-height: 500px;
     overflow-y: auto;
     background: #ffffff;
 }
+
 .mas-tab-content.active {
     display: block;
 }
+
+/* Actions Header (Hide All / Show All) */
 .mas-selection-actions {
     display: flex;
-    gap: 12px;
-    margin-bottom: 16px;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
 }
+
 .mas-btn-link {
-    background: none;
-    border: none;
-    color: #2271b1;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    color: #475569;
     cursor: pointer;
     font-size: 12px;
-    padding: 0;
+    font-weight: 600;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
 }
+
 .mas-btn-link:hover {
-    text-decoration: underline;
+    background: #e2e8f0;
+    color: #0f172a;
 }
+
+/* Menu Items Tree */
 .mas-menu-tree, .mas-nodes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mas-parent-item {
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 14px 18px;
+    border-radius: 12px;
+    transition: all 0.15s ease;
+}
+
+.mas-parent-item:hover {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    border-color: #e2e8f0;
+}
+
+.mas-parent-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.mas-submenu-list {
+    margin-left: 20px;
+    margin-top: 10px;
+    border-left: 2px solid #e2e8f0;
+    padding-left: 16px;
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.mas-parent-item {
-    background: #f6f7f7;
-    border: 1px solid #ccd0d4;
-    padding: 12px 16px;
-    border-radius: 8px;
-}
-.mas-parent-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-.mas-submenu-list {
-    margin-left: 24px;
-    margin-top: 8px;
-    border-left: 1px solid #ccd0d4;
-    padding-left: 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
+
 .mas-menu-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
 }
+
 .mas-menu-label {
-    font-size: 13px;
-    color: #2c3338;
+    font-size: 14px;
+    color: #1e293b;
     font-weight: 500;
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    flex-wrap: wrap;
 }
+
 .mas-parent-header .mas-menu-label {
     font-weight: 600;
 }
 
-/* iOS Styled Toggle switches */
+/* Segmented Control Radio Toggles */
 .mas-radio-group {
     display: flex;
-    background: #f0f0f1;
-    border: 1px solid #ccd0d4;
-    padding: 2px;
+    background: #e2e8f0;
+    padding: 3px;
     border-radius: 8px;
     user-select: none;
     align-items: center;
+    gap: 2px;
 }
+
 .mas-radio-toggle {
     cursor: pointer;
     display: flex;
     align-items: center;
+    margin: 0;
 }
+
 .mas-radio-toggle input[type="radio"] {
     position: absolute;
     opacity: 0;
@@ -261,143 +371,178 @@
     height: 0;
     margin: 0;
 }
+
 .mas-radio-toggle span {
     display: inline-block;
-    padding: 4px 14px;
+    padding: 5px 14px;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     color: #64748b;
     background: transparent;
     border-radius: 6px;
-    transition: all 0.15s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
+
 .mas-radio-toggle input[type="radio"][value="show"]:checked + span {
     background: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-    color: #2271b1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    color: #059669;
 }
+
 .mas-radio-toggle input[type="radio"][value="hide"]:checked + span {
     background: #ffffff;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-    color: #d63638;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    color: #e11d48;
 }
+
 .mas-radio-toggle input[type="radio"]:disabled + span {
-    opacity: 0.5;
+    opacity: 0.45;
     cursor: not-allowed;
 }
+
 .mas-radio-toggle.disabled {
     cursor: not-allowed;
 }
 
+/* Special Badges */
 .mas-badge-disabled-msg {
-    font-size: 10px;
-    color: #64748b;
-    background: #f0f0f1;
-    border: 1px solid #ccd0d4;
-    padding: 1px 4px;
-    margin-left: 8px;
-    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #2563eb;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    padding: 2px 8px;
+    margin-left: 6px;
+    border-radius: 12px;
 }
+
+.mas-badge-restricted-msg {
+    font-size: 11px;
+    font-weight: 600;
+    color: #d97706;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 2px 8px;
+    margin-left: 6px;
+    border-radius: 12px;
+}
+
 .mas-node-item {
-    background: #f6f7f7;
-    border: 1px solid #ccd0d4;
-    padding: 10px 16px;
-    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #f1f5f9;
+    padding: 12px 18px;
+    border-radius: 12px;
+    transition: all 0.15s ease;
 }
+
+.mas-node-item:hover {
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+    border-color: #e2e8f0;
+}
+
+/* Footer Section */
 .mas-card-footer {
-    padding: 16px 20px;
-    border-top: 1px solid #ccd0d4;
+    padding: 18px 24px;
+    border-top: 1px solid #f1f5f9;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: #f6f7f7;
-    border-radius: 0 0 8px 8px;
+    background: #f8fafc;
+    border-radius: 0 0 14px 14px;
 }
+
 .mas-btn {
-    padding: 8px 16px;
+    padding: 9px 18px;
     font-size: 13px;
     font-weight: 600;
     cursor: pointer;
-    border: 1px solid #ccd0d4;
-    border-radius: 8px;
-    transition: all 0.1s ease;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
+
 .mas-btn-primary {
-    background: #2271b1;
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
     color: #ffffff;
-    border-color: #2271b1;
+    box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
 }
+
 .mas-btn-primary:hover {
-    background: #135e96;
-    border-color: #135e96;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+    transform: translateY(-1px);
 }
+
 .mas-btn-secondary {
     background: #ffffff;
-    color: #2c3338;
+    color: #334155;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
 }
+
 .mas-btn-secondary:hover {
-    background: #f0f0f1;
+    background: #f8fafc;
+    border-color: #cbd5e1;
 }
+
 .mas-badge {
-    padding: 2px 8px;
+    padding: 4px 10px;
     font-size: 11px;
-    font-weight: 600;
-    border: 1px solid transparent;
-    border-radius: 8px;
+    font-weight: 700;
+    border-radius: 20px;
+    letter-spacing: 0.02em;
 }
+
 .mas-badge-active {
-    background: #e5f5fa;
-    color: #007cba;
-    border-color: #007cba;
+    background: #ecfdf5;
+    color: #059669;
+    border: 1px solid #a7f3d0;
 }
+
 .mas-badge-inactive {
-    background: #fcf0f1;
-    color: #d63638;
-    border-color: #d63638;
+    background: #fff1f2;
+    color: #e11d48;
+    border: 1px solid #fecdd3;
 }
+
+/* Toast Notifications */
 .mas-toast {
     position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #2271b1;
+    bottom: 24px;
+    right: 24px;
+    background: #0f172a;
     color: #ffffff;
-    padding: 10px 20px;
+    padding: 12px 24px;
     font-weight: 600;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    font-size: 13px;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.2);
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transform: translateY(12px);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 99999;
-    border-radius: 8px;
-}
-.mas-toast.show {
-    opacity: 1;
-}
-.mas-toast.error {
-    background: #d63638;
-}
-.mas-checkbox-label-meta {
-    font-size: 11px;
-    color: #8c8f94;
-    margin-left: 4px;
-}
-.mas-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-.mas-bypass-status {
+    border-radius: 12px;
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #ffffff;
-    padding: 6px 12px;
-    border: 1px solid #ccd0d4;
-    border-radius: 8px;
 }
-.mas-badge-label {
-    font-size: 12px;
-    font-weight: 500;
-    color: #64748b;
+
+.mas-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.mas-toast.error {
+    background: #e11d48;
+}
+
+.mas-checkbox-label-meta {
+    font-size: 11px;
+    color: #94a3b8;
+    font-family: monospace;
+    margin-left: 4px;
 }

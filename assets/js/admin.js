@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const data = window.MemoriesAdminShieldData || {
         roles: {},
+        roleCapabilities: {},
         roleCounts: {},
         discovered: {menus: {}, admin_bar: {}},
         settings: {roles: {}},
@@ -36,6 +37,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
+
+    // Helper: Check if active role has capability for a given menu item
+    function roleHasCapability(roleKey, cap) {
+        if (!cap) return true;
+        if (roleKey === 'administrator') return true;
+        const caps = (data.roleCapabilities && data.roleCapabilities[roleKey]) || {};
+        return !!caps[cap];
+    }
 
     // Render roles sidebar list
     function renderRoleList() {
@@ -137,13 +146,15 @@ document.addEventListener('DOMContentLoaded', function() {
         menuKeys.forEach(slug => {
             const menuData = data.discovered.menus[slug];
             const parentTitle = menuData.title || slug;
+            const parentCap = menuData.cap || '';
             const submenus = menuData.submenus || {};
             const submenuKeys = Object.keys(submenus);
             
             const parentMatches = parentTitle.toLowerCase().includes(query) || slug.toLowerCase().includes(query);
             
             const matchingSubmenuKeys = submenuKeys.filter(subSlug => {
-                const subTitle = submenus[subSlug] || subSlug;
+                const subData = submenus[subSlug];
+                const subTitle = (typeof subData === 'object' && subData !== null) ? (subData.title || subSlug) : (subData || subSlug);
                 return subTitle.toLowerCase().includes(query) || subSlug.toLowerCase().includes(query);
             });
             
@@ -173,23 +184,33 @@ document.addEventListener('DOMContentLoaded', function() {
                 menuLabel.appendChild(slugSpan);
             }
             
-            // Protect Admin settings lockout
+            // Safety Lock for Admin options page
             const isLockoutPrevented = (data.activeRole === 'administrator' && (slug === 'memories-admin-shield' || slug === 'client-safe-admin.php' || slug === 'client-safe-admin'));
             if (isLockoutPrevented) {
                 const lockBadge = document.createElement('span');
                 lockBadge.className = 'mas-badge-disabled-msg';
-                lockBadge.textContent = 'Always Visible (Safety Lock)';
+                lockBadge.textContent = '🛡️ Safety Lock';
                 menuLabel.appendChild(lockBadge);
+            } else {
+                // Check if active role has capability for this menu
+                const hasParentCap = roleHasCapability(data.activeRole, parentCap);
+                if (!hasParentCap && data.activeRole !== 'administrator') {
+                    const restrBadge = document.createElement('span');
+                    restrBadge.className = 'mas-badge-restricted-msg';
+                    restrBadge.textContent = 'WP Core Restricted';
+                    restrBadge.title = `The ${data.roles[data.activeRole] || data.activeRole} role lacks the '${parentCap}' capability in WP core by default.`;
+                    menuLabel.appendChild(restrBadge);
+                }
             }
             parentHeader.appendChild(menuLabel);
 
-            // Radio Group setup
+            // Radio Group setup (Segmented Control)
             const radioGroup = document.createElement('div');
             radioGroup.className = 'mas-radio-group';
             
             const isHidden = getSetting('menus', slug);
 
-            // Show option toggle button
+            // Show option
             const showLabel = document.createElement('label');
             showLabel.className = 'mas-radio-toggle';
             const showRadio = document.createElement('input');
@@ -206,7 +227,7 @@ document.addEventListener('DOMContentLoaded', function() {
             showSpan.textContent = 'Show';
             showLabel.appendChild(showSpan);
 
-            // Hide option toggle button
+            // Hide option
             const hideLabel = document.createElement('label');
             hideLabel.className = 'mas-radio-toggle';
             const hideRadio = document.createElement('input');
@@ -224,7 +245,6 @@ document.addEventListener('DOMContentLoaded', function() {
             hideSpan.textContent = 'Hide';
             hideLabel.appendChild(hideSpan);
 
-            // Action Listeners
             showRadio.addEventListener('change', () => {
                 updateSetting('menus', slug, false);
                 const subList = parentDiv.querySelector('.mas-submenu-list');
@@ -259,7 +279,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         return;
                     }
                     
-                    const subTitle = submenus[subSlug] || subSlug;
+                    const subData = submenus[subSlug];
+                    const subTitle = (typeof subData === 'object' && subData !== null) ? (subData.title || subSlug) : (subData || subSlug);
+                    const subCap = (typeof subData === 'object' && subData !== null) ? (subData.cap || '') : '';
+
                     const subRow = document.createElement('div');
                     subRow.className = 'mas-menu-row';
                     
@@ -281,8 +304,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (isSubLockoutPrevented) {
                         const lockBadge = document.createElement('span');
                         lockBadge.className = 'mas-badge-disabled-msg';
-                        lockBadge.textContent = 'Always Visible (Safety Lock)';
+                        lockBadge.textContent = '🛡️ Safety Lock';
                         subLabel.appendChild(lockBadge);
+                    } else {
+                        const hasSubCap = roleHasCapability(data.activeRole, subCap);
+                        if (!hasSubCap && data.activeRole !== 'administrator') {
+                            const restrSubBadge = document.createElement('span');
+                            restrSubBadge.className = 'mas-badge-restricted-msg';
+                            restrSubBadge.textContent = 'WP Core Restricted';
+                            restrSubBadge.title = `The ${data.roles[data.activeRole] || data.activeRole} role lacks the '${subCap}' capability in WP core by default.`;
+                            subLabel.appendChild(restrSubBadge);
+                        }
                     }
                     subRow.appendChild(subLabel);
 
@@ -350,7 +382,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         if (renderedCount === 0) {
-            treeContainer.innerHTML = '<div style="color: #64748b; text-align: center; padding: 20px;">No sidebar menus found matching search.</div>';
+            treeContainer.innerHTML = '<div style="color: #64748b; text-align: center; padding: 24px; font-size: 13px;">No sidebar menus found matching search.</div>';
         }
     }
 
@@ -437,14 +469,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         if (renderedCount === 0) {
-            listContainer.innerHTML = '<div style="color: #64748b; text-align: center; padding: 20px;">No Admin Bar nodes found matching search.</div>';
+            listContainer.innerHTML = '<div style="color: #64748b; text-align: center; padding: 24px; font-size: 13px;">No Admin Bar nodes found matching search.</div>';
         }
     }
 
     // Initialize layout and views
     const activeRoleTitleEl = document.getElementById('mas-active-role-title');
     if (activeRoleTitleEl) {
-        activeRoleTitleEl.textContent = `Configuring: ${data.roles[data.activeRole]}`;
+        activeRoleTitleEl.textContent = `Configuring: ${data.roles[data.activeRole] || data.activeRole}`;
     }
     renderRoleList();
     renderSidebarMenus();
@@ -572,7 +604,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     updateBypassUI();
                     showToast(data.bypass ? 'Shield bypassed (Maintenance ON)' : 'Shield active (Filters ON)');
                     
-                    // Reload after brief timeout to apply filters instantly
                     setTimeout(() => {
                         window.location.reload();
                     }, 1000);

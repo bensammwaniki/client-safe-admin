@@ -48,7 +48,15 @@ class Memories_Admin_Shield_Admin {
         wp_enqueue_script('memories-admin-shield-js', MEMORIES_ADMIN_SHIELD_URL . 'assets/js/admin.js', array(), '2.0', true);
 
         // Localize data for JavaScript usage
-        $roles = wp_roles()->get_names();
+        $wp_roles = wp_roles();
+        $roles = $wp_roles->get_names();
+        $role_capabilities = array();
+        if (!empty($wp_roles->roles) && is_array($wp_roles->roles)) {
+            foreach ($wp_roles->roles as $role_key => $role_data) {
+                $role_capabilities[$role_key] = isset($role_data['capabilities']) ? $role_data['capabilities'] : array();
+            }
+        }
+
         $user_counts = count_users();
         $role_counts = isset($user_counts['avail_roles']) ? $user_counts['avail_roles'] : array();
         $discovered = get_option('memories_admin_shield_discovered', array('menus' => array(), 'admin_bar' => array()));
@@ -83,6 +91,7 @@ class Memories_Admin_Shield_Admin {
 
         wp_localize_script('memories-admin-shield-js', 'MemoriesAdminShieldData', array(
             'roles' => $roles,
+            'roleCapabilities' => $role_capabilities,
             'roleCounts' => $role_counts,
             'discovered' => $discovered,
             'settings' => $settings,

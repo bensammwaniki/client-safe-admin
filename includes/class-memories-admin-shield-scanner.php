@@ -30,7 +30,12 @@ class Memories_Admin_Shield_Scanner {
         foreach ($menu as $item) {
             if (empty($item[2])) continue;
             $slug = $item[2];
-            $title = isset($item[0]) ? strip_tags($item[0]) : '';
+            $cap  = isset($item[1]) ? $item[1] : '';
+            $raw_title = isset($item[0]) ? $item[0] : '';
+            
+            // Remove notification count spans before stripping tags
+            $title = preg_replace('/<span[^>]*class="[^"]*(?:count|plugin-count|update-plugins|awaiting-mod)[^"]*"[^>]*>.*?<\/span>/is', '', $raw_title);
+            $title = trim(strip_tags($title));
             if (empty($title)) {
                 $title = $slug;
             }
@@ -38,26 +43,58 @@ class Memories_Admin_Shield_Scanner {
             if (!isset($discovered['menus'][$slug])) {
                 $discovered['menus'][$slug] = array(
                     'title' => $title,
+                    'cap'   => $cap,
                     'submenus' => array()
                 );
                 $changed = true;
-            } else if ($discovered['menus'][$slug]['title'] !== $title && !empty($title)) {
-                $discovered['menus'][$slug]['title'] = $title;
-                $changed = true;
+            } else {
+                if (!isset($discovered['menus'][$slug]['title']) || $discovered['menus'][$slug]['title'] !== $title) {
+                    $discovered['menus'][$slug]['title'] = $title;
+                    $changed = true;
+                }
+                if (!isset($discovered['menus'][$slug]['cap']) || $discovered['menus'][$slug]['cap'] !== $cap) {
+                    $discovered['menus'][$slug]['cap'] = $cap;
+                    $changed = true;
+                }
             }
 
             // Process submenus
             if (!empty($submenu[$slug])) {
+                if (!isset($discovered['menus'][$slug]['submenus'])) {
+                    $discovered['menus'][$slug]['submenus'] = array();
+                }
+
                 foreach ($submenu[$slug] as $sub_item) {
                     if (empty($sub_item[2])) continue;
                     $sub_slug = $sub_item[2];
-                    $sub_title = isset($sub_item[0]) ? strip_tags($sub_item[0]) : '';
+                    $sub_cap  = isset($sub_item[1]) ? $sub_item[1] : '';
+                    $sub_raw_title = isset($sub_item[0]) ? $sub_item[0] : '';
+                    $sub_title = preg_replace('/<span[^>]*class="[^"]*(?:count|plugin-count|update-plugins|awaiting-mod)[^"]*"[^>]*>.*?<\/span>/is', '', $sub_raw_title);
+                    $sub_title = trim(strip_tags($sub_title));
                     if (empty($sub_title)) {
                         $sub_title = $sub_slug;
                     }
 
-                    if (!isset($discovered['menus'][$slug]['submenus'][$sub_slug]) || $discovered['menus'][$slug]['submenus'][$sub_slug] !== $sub_title) {
-                        $discovered['menus'][$slug]['submenus'][$sub_slug] = $sub_title;
+                    $new_sub_data = array(
+                        'title' => $sub_title,
+                        'cap'   => $sub_cap
+                    );
+
+                    $existing_sub = isset($discovered['menus'][$slug]['submenus'][$sub_slug]) 
+                        ? $discovered['menus'][$slug]['submenus'][$sub_slug] 
+                        : null;
+
+                    if (is_string($existing_sub)) {
+                        // Upgrade legacy string format to array format
+                        $discovered['menus'][$slug]['submenus'][$sub_slug] = $new_sub_data;
+                        $changed = true;
+                    } else if (is_array($existing_sub)) {
+                        if (!isset($existing_sub['title']) || $existing_sub['title'] !== $sub_title || !isset($existing_sub['cap']) || $existing_sub['cap'] !== $sub_cap) {
+                            $discovered['menus'][$slug]['submenus'][$sub_slug] = $new_sub_data;
+                            $changed = true;
+                        }
+                    } else {
+                        $discovered['menus'][$slug]['submenus'][$sub_slug] = $new_sub_data;
                         $changed = true;
                     }
                 }
@@ -88,7 +125,9 @@ class Memories_Admin_Shield_Scanner {
         foreach ($nodes as $node) {
             if (empty($node->id)) continue;
             $id = $node->id;
-            $title = isset($node->title) ? strip_tags($node->title) : '';
+            $raw_title = isset($node->title) ? $node->title : '';
+            $title = preg_replace('/<span[^>]*class="[^"]*(?:count|plugin-count|update-plugins|awaiting-mod)[^"]*"[^>]*>.*?<\/span>/is', '', $raw_title);
+            $title = trim(strip_tags($title));
             if (empty($title)) {
                 $title = $id;
             }

@@ -76,6 +76,11 @@ class Memories_Admin_Shield_Filter {
 
         // Apply submenu page removal
         foreach ($hide_submenus as $parent_slug => $sub_slugs) {
+            // If parent is already removed, skip removing submenus individually
+            if (isset($hide_menus[$parent_slug]) && $hide_menus[$parent_slug] === $total_user_roles) {
+                continue;
+            }
+
             foreach ($sub_slugs as $sub_slug => $count) {
                 if (in_array('administrator', $user_roles) && ($sub_slug === 'memories-admin-shield' || $sub_slug === 'client-safe-admin.php' || $sub_slug === 'client-safe-admin')) {
                     continue;
